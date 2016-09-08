@@ -3,7 +3,7 @@
 let express = require('express');
 
 const CONFIG = require('./config');
-let logger   = new (require('./../server/modules/logger'))('SERVER [WEB]', CONFIG);
+let logger   = new (require('./../server/modules/Logger'))('SERVER [WEB]', CONFIG);
 
 let options = {
   dotfiles  : 'ignore',
