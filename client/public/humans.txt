@@ -1,9 +1,0 @@
-/* TEAM */
-
-/* THANKS */
-    Creator: Paule Lepage
-    Github: https://github.com/nyanofthemoon/WebSocket-Client-Instance-Manager
-    Website: protolicio.us
-    From:Montreal, QC, Canada
-
-/* SITE */
