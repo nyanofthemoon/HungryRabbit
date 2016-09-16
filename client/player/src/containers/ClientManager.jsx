@@ -14,13 +14,13 @@ class ClientManager extends Component {
       default:
       case 'connecting':
       case 'disconnected':
-        return (<div className="flex-vertical-container light-text">
+        return (<div className="light-text text-centered">
           <h1 className="title">Client Manager</h1>
           <h2 className="title">Please enter your name below.</h2>
           <ConnectionForm handleSubmit={actions.connectSocket}/>
         </div>)
       case 'connected':
-        return (<div className="flex-vertical-container light-text">
+        return (<div className="light-text text-centered">
           <ClientInstance/>
         </div>)
     }

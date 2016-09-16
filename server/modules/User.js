@@ -1,44 +1,45 @@
 'use strict';
 
-let CryptoJS = require('crypto-js');
+let deepExtend = require('deep-extend')
+let MD5 = require('crypto-js/md5')
 
-let Logger = require('./Logger');
+let Logger = require('./Logger')
 
-const CONFIG = require('./../config');
+const CONFIG = require('./../config')
 
 class User {
 
   constructor(config) {
-    this.logger = new Logger('USER', config);
-    this.socket = null;
+    this.logger = new Logger('USER', config)
+    this.socket = null
     this.data = {
       name    : CONFIG.user.defaultName,
       instance: null
-    };
+    }
   }
 
   initialize(socket, data) {
-    this.socket = socket;
-    let that    = this;
-    Object.keys(data).forEach(function (key) {
-      that.data[key] = data[key];
-    });
+    this.socket = socket
+    deepExtend(this.data, data)
+    if (!this.data.id) {
+      this.data.id = User.getId(this.data.name)
+    }
   }
 
   static getId(name) {
-    return CryptoJS.SHA3(CONFIG.user.salt + [...name].reverse().join());
+    return MD5(name).toString()
   }
 
   getId() {
-    return User.getId(this.data.name);
+    return User.getId(this.data.name)
   }
 
   getName() {
-    return this.data.name;
+    return this.data.name
   }
 
   getInstance() {
-    return this.data.instance;
+    return this.data.instance
   }
 
   query() {
@@ -47,46 +48,45 @@ class User {
       'data': {
         'name': this.getName()
       }
-    };
+    }
 
-    return struct;
+    return struct
   }
 
   canJoin(instance) {
-    return !instance.hasUser(this);
+    return !instance.hasUser(this)
   }
 
   join(instance) {
-    let instanceId = instance.getId();
-    this.socket.join(instanceId);
-    this.data.instance = instanceId;
-    instance.addUser(this);
-    this.socket.emit('query', instance.query());
-    this.socket.to(instanceId).emit('join', this.query());
+    let instanceId = instance.getId()
+    this.socket.join(instanceId)
+    this.data.instance = instanceId
+    instance.addUser(this)
+    this.socket.emit('query', instance.query())
+    this.socket.to(instanceId).emit('join', this.query())
   }
 
-  canSpeak(instance) {
-    return true;
+  canAct(instance) {
+    return !instance.hasUser(this)
   }
 
-  speak(instance, message) {
-    this.socket.to(instance.getId()).emit('speak', {
-      name   : this.getName(),
-      message: message
-    });
+  act(instance, action) {
+    this.socket.to(instance.getId()).emit('action', {
+      //@TODO
+    })
   }
 
   canLeave(instance) {
-    return instance.hasUser(this);
+    return instance.hasUser(this)
   }
 
   leave(instance) {
-    let instanceId = instance.getId();
-    this.socket.leave(instanceId);
-    instance.removeUser(this);
-    this.socket.to(instanceId).emit('leave', this.query());
+    let instanceId = instance.getId()
+    this.socket.leave(instanceId)
+    instance.removeUser(this)
+    this.socket.to(instanceId).emit('leave', this.query())
   }
 
-};
+}
 
-module.exports = User;
+module.exports = User

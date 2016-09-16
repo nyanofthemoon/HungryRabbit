@@ -3,44 +3,16 @@
 import io from 'socket.io-client'
 
 import Config     from './../config'
-import * as types from './../constants/ActionTypes'
+import * as types from './../constant'
 
 let socket
 
-export function createSocketConnection(username) {
+export function createSocketConnection(value) {
   if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit Connection for ' + username)
+    console.log('[WebSocket] Emit Connection for admin')
   }
-  socket = io.connect('//' + Config.environment.host + Config.environment.port, {"query": {"name": username}})
+  socket = io.connect('//' + Config.environment.host + Config.environment.port, {"query": {"admin": value}})
   return socket
-}
-
-export function emitSocketUserQueryEvent() {
-  if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit User Query')
-  }
-  socket.emit('query', {type: 'user'})
-}
-
-export function emitUserJoin(id) {
-  if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit User Join')
-  }
-  socket.emit('join', {id: id})
-}
-
-export function emitUserSpeakc(message) {
-  if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit User Speak')
-  }
-  socket.emit('speak', {message: message})
-}
-
-export function emitUserLeave(id) {
-  if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit User Leave')
-  }
-  socket.emit('leave', {id: id})
 }
 
 export function emitSocketInstanceQueryEvent(id) {
@@ -48,4 +20,11 @@ export function emitSocketInstanceQueryEvent(id) {
     console.log('[WebSocket] Emit Instance Query for ' + id)
   }
   socket.emit('query', {type: 'instance', id: id})
+}
+
+export function emitSocketInstanceUpdateEvent(id, data) {
+  if (Config.environment.isVerbose()) {
+    console.log('[WebSocket] Emit Instance Update for ' + id)
+  }
+  socket.emit('update', {type: 'instance', id: id, data: data})
 }

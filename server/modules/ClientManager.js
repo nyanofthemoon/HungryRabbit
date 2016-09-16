@@ -15,7 +15,8 @@ class ClientManager {
     this.data = {
       sessions: {},
       users: {},
-      instances: {}
+      instances: {},
+      admin: {}
     };
   }
 
@@ -66,135 +67,186 @@ class ClientManager {
         that.error(data, socket);
       });
       socket.on('query', function (data) {
-        that.query(data, socket);
-      });
+        that.query(data, socket)
+      })
       socket.on('join', function (data) {
-        that.join(data, socket);
-      });
-      socket.on('speak', function (data) {
-        that.speak(data, socket);
-      });
+        that.join(data, socket)
+      })
+      socket.on('action', function (data) {
+        that.action(data, socket)
+      })
       socket.on('leave', function (data) {
-        that.leave(data, socket);
-      });
+        that.leave(data, socket)
+      })
     } catch (e) {
-      this.logger.error('Socket ' + socket.id + ' not bound to events ', e);
+      this.logger.error('Socket ' + socket.id + ' not bound to user events ', e)
+    }
+  }
+
+  bindSocketToAdminModuleEvents(socket) {
+    var that = this;
+    try {
+      socket.on('error', function (data) {
+        that.error(data, socket);
+      });
+      socket.on('query', function (data) {
+        that.query(data, socket)
+      })
+      socket.on('update', function (data) {
+        that.update(data, socket)
+      })
+    } catch (e) {
+      this.logger.error('Socket ' + socket.id + ' not bound to admin events ', e)
     }
   }
 
   join(data, socket) {
     try {
-      let user     = this.getUserBySocketId(socket.id);
-      var instance = this.getClientInstance(data.id);
-      if (!instance) {
-        instance = new ClientInstance(this.config);
-        instance.initialize(this.sockets, {
-          id: data.id
-        });
-        this.addClientInstance(data.id, instance);
-      }
-      if (user.canJoin(instance)) {
-        let joinedInstance = this.getClientInstance(user.getInstance());
-        if (joinedInstance && user.canLeave(joinedInstance)) {
-          user.leave(joinedInstance);
+      let user     = this.getUserBySocketId(socket.id)
+      var instance = this.getClientInstance(data.id)
+      if (instance) {
+        if (user.canJoin(instance)) {
+          let joinedInstance = this.getClientInstance(user.getInstance())
+          if (joinedInstance && user.canLeave(joinedInstance)) {
+            user.leave(joinedInstance)
+          }
+          user.join(instance)
+          this.logger.verbose('[JOIN] ' + JSON.stringify(data))
+        } else {
+          this.logger.verbose('[JOIN] Invalid ' + JSON.stringify(data))
         }
-        user.join(instance);
-        this.logger.verbose('[JOIN] ' + JSON.stringify(data));
       } else {
-        this.logger.verbose('[JOIN] Invalid ' + JSON.stringify(data));
+        this.logger.verbose('[JOIN] Instance ' + data.id + ' not available')
       }
     } catch (e) {
-      this.logger.error('[JOIN] ' + JSON.stringify(data) + ' ' + e);
+      this.logger.error('[JOIN] ' + JSON.stringify(data) + ' ' + e)
     }
   }
 
-  speak(data, socket) {
+  action(data, socket) {
     try {
-      let user           = this.getUserBySocketId(socket.id);
-      let joinedInstance = this.getClientInstance(user.getInstance());
-      if (joinedInstance && user.canSpeak(joinedInstance)) {
-        user.speak(joinedInstance, message);
+      let user           = this.getUserBySocketId(socket.id)
+      let joinedInstance = this.getClientInstance(user.getInstance())
+      if (joinedInstance && user.canAct(joinedInstance)) {
+        user.act(joinedInstance, data.action)
       }
-      this.logger.verbose('[SPEAK] ' + data.message);
+      this.logger.verbose('[ACTION] ' + data.action)
     } catch (e) {
-      this.logger.error('[SPEAK] ' + JSON.stringify(info) + ' ' + e);
+      this.logger.error('[ACTION] ' + JSON.stringify(info) + ' ' + e)
     }
   }
 
   leave(data, socket) {
     try {
-      let user = this.getUserBySocketId(socket.id);
-      let instance = this.getClientInstance(data.id);
+      let user = this.getUserBySocketId(socket.id)
+      let instance = this.getClientInstance(data.id)
       if (instance && user.canLeave(instance)) {
-        user.leave(instance);
-        this.logger.verbose('[LEAVE] ' + JSON.stringify(data));
+        user.leave(instance)
+        this.logger.verbose('[LEAVE] ' + JSON.stringify(data))
       } else {
-        this.logger.verbose('[LEAVE] Invalid ' + JSON.stringify(data));
+        this.logger.verbose('[LEAVE] Invalid ' + JSON.stringify(data))
       }
     } catch (e) {
-      this.logger.error('[LEAVE] ' + JSON.stringify(data), e);
+      this.logger.error('[LEAVE] ' + JSON.stringify(data), e)
     }
   }
 
   query(data, socket) {
     try {
-      let info = null;
+      let info = null
       switch (data.type) {
         case 'instance':
-          info = this.data.instances[data.id].query();
-          break;
+          info = this.data.instances[data.id].query()
+          break
         case 'user':
-          info = this.getUserBySocketId(socket.id).query();
-          break;
+          info = this.getUserBySocketId(socket.id).query()
+          break
         default:
-          break;
+          break
       }
-      socket.emit('query', info);
-      this.logger.verbose('[QUERY] ' + data.type);
+      socket.emit('query', info)
+      this.logger.verbose('[QUERY] ' + data.type)
     } catch (e) {
-      this.logger.error('[QUERY] ' + JSON.stringify(info) + ' ' + e);
+      this.logger.error('[QUERY] ' + JSON.stringify(info) + ' ' + e)
+    }
+  }
+
+  update(data, socket) {
+    try {
+      let info = null
+      switch (data.type) {
+        case 'instance':
+          let instance = this.data.instances[data.id]
+          if (!instance) {
+            instance = new ClientInstance(this.config)
+            instance.initialize(this.sockets, { id: data.id })
+            instance.wait()
+            this.addClientInstance(data.id, instance)
+          } else {
+            instance.initialize(this.sockets, data.data)
+          }
+          info = instance.query()
+          socket.emit('query', info)
+          socket.to(instance.getId()).emit('query', info)
+          break
+        default:
+          break
+      }
+      this.logger.verbose('[UPDATE] ' + data.type)
+    } catch (e) {
+      this.logger.error('[UPDATE] ' + JSON.stringify(info) + ' ' + e)
     }
   }
 
   error(data, socket) {
     try {
-      socket.emit('error', {event: 'error'});
+      socket.emit('error', {event: 'error'})
     } catch (e) {
-      this.logger.error('An unknown socket error has occured', e);
+      this.logger.error('An unknown socket error has occured', e)
     }
   }
 
   handleSocketConnection(socket) {
     if (socket.handshake.query.name) {
-      let userId = User.getId(socket.handshake.query.name);
-      let user   = this.getUser(userId);
+      let userId = User.getId(socket.handshake.query.name)
+      let user   = this.getUser(userId)
       if (!user) {
-        user = new User(this.config);
+        user = new User(this.config)
         user.initialize(socket, {
           name: socket.handshake.query.name
-        });
-        this.addUser(user);
+        })
+        this.addUser(user)
       }
-      this.data.sessions[socket.id] = userId;
-      this.bindSocketToModuleEvents(socket);
-      this.logger.info('User ' + user.getName() + ' connected.', socket.id);
+      this.data.sessions[socket.id] = userId
+      this.bindSocketToModuleEvents(socket)
+      this.logger.info('User ' + user.getName() + ' connected.', socket.id)
+    } else if (socket.handshake.query.admin) {
+      this.logger.info('Admin connected.', socket.id)
+      this.data.admin = {
+        socket: socket
+      }
+      this.bindSocketToAdminModuleEvents(socket)
     }
   }
 
   handleSocketDisconnection(socket) {
-    let socketId = socket.id;
-    let user     = this.getUserBySocketId(socketId);
-    delete(this.data.sessions[socketId]);
-    let userInstanceId = user.getInstance();
-    if (userInstanceId) {
-      let instance = this.getClientInstance(userInstanceId);
-      if (instance && user.canLeave(instance)) {
-        user.leave(instance)
+    let socketId = socket.id
+    let user     = this.getUserBySocketId(socketId)
+    if (user) {
+      delete(this.data.sessions[socketId])
+      let userInstanceId = user.getInstance()
+      if (userInstanceId) {
+        let instance = this.getClientInstance(userInstanceId)
+        if (instance && user.canLeave(instance)) {
+          user.leave(instance)
+        }
       }
+      this.logger.info('User ' + user.getName() + ' disconnected from ' + userInstanceId + '.', socket.id)
+    } else if (this.data.admin.socket && socketId == this.data.admin.socket.id) {
+      this.logger.info('Admin disconnected.', socket.id)
     }
-    this.logger.info('User ' + user.getName() + ' disconnected.', socket.id);
   }
 
-};
+}
 
-module.exports = ClientManager;
+module.exports = ClientManager

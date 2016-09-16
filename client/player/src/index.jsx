@@ -7,13 +7,13 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 
-import ClientManager from './containers/ClientManager';
+import Application from './containers/Application';
 import store         from './store'
 
 setTimeout(function() {
   render(
     <Provider store={store}>
-      <ClientManager />
+      <Application />
     </Provider>,
     document.getElementById('root')
   );

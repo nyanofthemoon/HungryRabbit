@@ -1,23 +1,22 @@
 import * as _ from 'lodash';
 
 import Store      from './store'
-import {createSocketConnection, emitSocketUserQueryEvent, emitSocketInstanceQueryEvent, emitUserJoin, emitUserLeave} from './helpers/socket'
+import {createSocketConnection, emitSocketInstanceQueryEvent, emitSocketInstanceUpdateEvent} from './helpers/socket'
 import Config     from './config'
-import * as types from './constants/ActionTypes'
+import * as types from './constant'
 
 let socket
-let dispatch
+let dispatch = Store.dispatch
 
 function _getState() {
   return Store.getState()
 }
 
-export function connectSocket(username, store) {
+export function connectSocket() {
   if (Config.environment.isVerbose()) {
     console.log('[Action   ] Run ' + types.CONNECT_SOCKET_REQUESTED)
   }
-  socket = createSocketConnection(username, store)
-  dispatch = store.dispatch
+  socket   = createSocketConnection('password')
   socket.on('error', function (error) {
     if (Config.environment.isVerbose()) {
       console.log('[WebSocket] Received Error', error)
@@ -45,32 +44,12 @@ function connectSocketSuccess() {
     switch (data.type) {
       case 'instance':
         return queryInstanceReception(data)
-      case 'user':
-        return queryUserReception(data)
       default:
         return queryUnknownReception(data)
     }
   })
-  socket.on('join', function (data) {
-    if (Config.environment.isVerbose()) {
-      console.log('[WebSocket] Received Join', data)
-    }
-    return joinInstanceReception(data)
-  })
-  socket.on('speak', function (data) {
-    if (Config.environment.isVerbose()) {
-      console.log('[WebSocket] Received Speak', data)
-    }
-    return speakInstanceReception(data)
-  })
-  socket.on('leave', function (data) {
-    if (Config.environment.isVerbose()) {
-      console.log('[WebSocket] Received Leave', data)
-    }
-    return leaveInstanceReception(data)
-  })
-  dispatch({type: types.QUERY_USER_REQUESTED})
-  emitSocketUserQueryEvent()
+  dispatch({type: types.UPDATE_INSTANCE_REQUESTED})
+  emitSocketInstanceUpdateEvent(Config.instance.id, {})
   bindWindowResizeEvent()
   window.dispatchEvent(new Event('resize'))
 }
@@ -82,27 +61,24 @@ function connectSocketFailure(message) {
   dispatch({type: types.CONNECT_SOCKET_FAILED})
 }
 
-export function queryUser() {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.QUERY_USER_REQUESTED)
-  }
-  emitSocketUserQueryEvent()
-  return {type: types.QUERY_USER_REQUESTED, payload: {}}
+export function startInstance() {
+  emitSocketInstanceUpdateEvent(Config.instance.id, {
+    status: 'started'
+  })
 }
 
-function queryUserReception(data) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.QUERY_USER_RECEIVED + ' for User')
-  }
-  dispatch({type: types.QUERY_USER_RECEIVED, payload: data.data})
+export function stopInstance() {
+  emitSocketInstanceUpdateEvent(Config.instance.id, {
+    status: 'stopped'
+  })
 }
 
-export function queryInstance(id) {
+export function queryInstance() {
   if (Config.environment.isVerbose()) {
     console.log('[Action   ] Run ' + types.QUERY_INSTANCE_REQUESTED)
   }
-  emitSocketInstanceQueryEvent(id)
-  return {type: types.QUERY_INSTANCE_REQUESTED, payload: {id: id}}
+  emitSocketInstanceQueryEvent(Config.instance.id)
+  return {type: types.QUERY_INSTANCE_REQUESTED, payload: {id: Config.instance.id}}
 }
 
 function queryInstanceReception(data) {
@@ -110,43 +86,6 @@ function queryInstanceReception(data) {
     console.log('[Action   ] Run ' + types.QUERY_INSTANCE_RECEIVED)
   }
   dispatch({type: types.QUERY_INSTANCE_RECEIVED, payload: data.data})
-}
-
-export function joinInstance(id) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.USER_JOIN_INSTANCE_REQUESTED)
-  }
-  emitUserJoin(id)
-  return {type: types.USER_JOIN_INSTANCE_REQUESTED, payload: {id: id}}
-}
-
-function joinInstanceReception(data) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.USER_JOIN_INSTANCE_RECEIVED)
-  }
-  dispatch({type: types.USER_JOIN_INSTANCE_RECEIVED, payload: data.data})
-}
-
-function speakInstanceReception(data) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.USER_SPEAK_INSTANCE_RECEIVED)
-  }
-  dispatch({type: types.USER_SPEAK_INSTANCE_RECEIVED, payload: data.data})
-}
-
-export function leaveInstance(id) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.USER_LEAVE_INSTANCE_REQUESTED)
-  }
-  emitUserLeave(id)
-  return {type: types.USER_LEAVE_INSTANCE_REQUESTED, payload: {id: id}}
-}
-
-function leaveInstanceReception(data) {
-  if (Config.environment.isVerbose()) {
-    console.log('[Action   ] Run ' + types.USER_LEAVE_INSTANCE_RECEIVED)
-  }
-  dispatch({type: types.USER_LEAVE_INSTANCE_RECEIVED, payload: data.data})
 }
 
 function queryUnknownReception(data) {

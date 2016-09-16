@@ -1,22 +1,15 @@
-import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
+import React, {Component} from 'react'
+
+require('react-tap-event-plugin')()
 
 class User extends Component {
   render() {
-    const {user} = this.props
-    let data     = user.get('data')
-    return (<div id="user">You are {data.name}</div>)
+    return (
+      <button className="tap" type="button" onTouchTap={this.props.handleTouchTap} onClick={this.props.handleClick}>
+        Tap Me
+      </button>
+    )
   }
 }
 
-User.contextTypes = {
-  store: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  }
-}
-
-export default connect(mapStateToProps)(User)
+export default User

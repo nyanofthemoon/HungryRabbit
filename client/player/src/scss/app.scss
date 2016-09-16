@@ -91,3 +91,10 @@ h2.title {
 
 /* Connected Screen */
 
+.tap {
+  transition: all 0.2s ease;
+}
+
+.tap:active {
+  transform: scale(1.3)
+}

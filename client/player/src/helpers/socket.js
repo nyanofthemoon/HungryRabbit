@@ -3,7 +3,7 @@
 import io from 'socket.io-client'
 
 import Config     from './../config'
-import * as types from './../constants/ActionTypes'
+import * as types from './../constant'
 
 let socket
 
@@ -29,11 +29,11 @@ export function emitUserJoin(id) {
   socket.emit('join', {id: id})
 }
 
-export function emitUserSpeakc(message) {
+export function emitUserAction(action) {
   if (Config.environment.isVerbose()) {
-    console.log('[WebSocket] Emit User Speak')
+    console.log('[WebSocket] Emit User Action')
   }
-  socket.emit('speak', {message: message})
+  socket.emit('action', {action: action})
 }
 
 export function emitUserLeave(id) {

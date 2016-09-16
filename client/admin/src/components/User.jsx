@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 class User extends Component {
   render() {
     const {user} = this.props
-    let data     = user.get('data')
-    return (<div id="user">You are {data.name}</div>)
+    let name     = user.getIn(['data', 'name'])
+    return (<div id="user">You are {name}</div>)
   }
 }
 

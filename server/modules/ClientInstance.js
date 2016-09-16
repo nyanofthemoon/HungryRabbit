@@ -1,8 +1,9 @@
 'use strict';
 
+let deepExtend = require('deep-extend')
+
 let Logger = require('./Logger')
 
-const CLIENT_INSTANCE_STATUS_INIT  = 'initializing'
 const CLIENT_INSTANCE_STATUS_WAIT  = 'waiting'
 const CLIENT_INSTANCE_STATUS_START = 'started'
 const CLIENT_INSTANCE_STATUS_STOP  = 'stopped'
@@ -16,16 +17,12 @@ class ClientInstance {
       id     : null,
       status : null,
       users  : {}
-    };
+    }
   }
 
   initialize(socket, data) {
-    this.socket      = socket
-    this.data.status = CLIENT_INSTANCE_STATUS_INIT
-    var that         = this
-    Object.keys(data).forEach(function (key) {
-      that.data[key] = data[key]
-    })
+    this.socket = socket
+    deepExtend(this.data, data)
   }
 
   getId() {
@@ -37,26 +34,23 @@ class ClientInstance {
   }
 
   wait() {
-    // @TODO Waiting for users to join. Add logic.
-    this.data.status = CLIENT_INSTANCE_STATUS_WAITING
+    this.data.status = CLIENT_INSTANCE_STATUS_WAIT
   }
 
   start() {
-    // @TODO Start! Add running logic.
-    this.data.status = CLIENT_INSTANCE_STATUS_STARTED
+    this.data.status = CLIENT_INSTANCE_STATUS_START
   }
 
   stop() {
-    // @TODO Ended... Add completion logic.
-    this.data.status = CLIENT_INSTANCE_STATUS_STOPPED
+    this.data.status = CLIENT_INSTANCE_STATUS_STOP
   }
 
   query() {
-    let that  = this;
-    let users = [];
-    Object.keys(this.data.users).map(function(user, index) {
-      users.push(that.data.users[user].query().data);
-    });
+    let that  = this
+    let users = []
+    Object.keys(this.getUsers()).map(function(user, index) {
+      users.push(that.data.users[user].query().data)
+    })
     let struct = {
       type: 'instance',
       data: {

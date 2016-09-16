@@ -16,6 +16,19 @@ Prototype
 
 # Requests And Responses
 
+
+### Connect User
+
+###### Request
+```js
+socket.connect({HOST}, data)
+```
+```json
+{
+  "name": "Nyan"
+}
+```
+
 ### Query User
 
 ###### Request
@@ -99,6 +112,27 @@ socket.on('speak', callback)
 {
   "name"  : "Nyan",
   "message: "Hello!"
+}
+```
+
+### Act Instance
+###### Request
+```js
+socket.emit('action', data)
+```
+```json
+data = {
+  "action": "tap"
+}
+```
+###### Response
+```js
+socket.on('action', callback)
+```
+```json
+{
+  "name"  : "Nyan",
+  "action": "tap"
 }
 ```
 
