@@ -8,7 +8,7 @@ import User from './../components/User'
 class ClientInstance extends Component {
 
   _handleTap() {
-    actionInstance('tap')
+    actionInstance('tap', 1)
   }
 
   render() {

@@ -1,6 +1,7 @@
 'use strict';
 
 let deepExtend = require('deep-extend')
+let _ = require('lodash')
 
 let Logger = require('./Logger')
 
@@ -14,9 +15,11 @@ class ClientInstance {
     this.logger = new Logger('CLIENT INSTANCE', config)
     this.socket = null
     this.data = {
-      id     : null,
-      status : null,
-      users  : {}
+      id: null,
+      status: null,
+      users: {},
+      taps: {},
+      maxTaps: 0
     }
   }
 
@@ -45,6 +48,10 @@ class ClientInstance {
     this.data.status = CLIENT_INSTANCE_STATUS_STOP
   }
 
+  isAcceptingJoin() {
+    return (CLIENT_INSTANCE_STATUS_WAIT === this.data.state)
+  }
+
   query() {
     let that  = this
     let users = []
@@ -56,7 +63,8 @@ class ClientInstance {
       data: {
         id    : this.getId(),
         status: this.getStatus(),
-        users : users
+        users : users,
+        taps  : this.data.taps
       }
     }
 
@@ -81,6 +89,31 @@ class ClientInstance {
 
   addUser(user) {
     this.data.users[user.getId()] = user
+  }
+
+  // Actions
+
+  act(type, user) {
+    if (CLIENT_INSTANCE_STATUS_START === this.getStatus()) {
+      switch (type) {
+        case 'tap':
+          this._tap(user, 1)
+          break
+        default:
+          break
+      }
+    }
+  }
+
+  _tap(user, value) {
+    this.data.taps[user.getId()] = this.data.taps[user.getId()] + value
+  }
+
+  _tapReached() {
+    let highest = _.max(Object.keys(this.data.taps), function (o) {
+      return this.data.taps[o]
+    })
+    return (highest >= this.data.maxTaps)
   }
 
 }

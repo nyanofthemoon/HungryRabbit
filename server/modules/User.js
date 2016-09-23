@@ -70,12 +70,6 @@ class User {
     return !instance.hasUser(this)
   }
 
-  act(instance, action) {
-    this.socket.to(instance.getId()).emit('action', {
-      //@TODO
-    })
-  }
-
   canLeave(instance) {
     return instance.hasUser(this)
   }

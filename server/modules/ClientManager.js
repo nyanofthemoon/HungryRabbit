@@ -9,9 +9,9 @@ let User           = require('./User');
 class ClientManager {
 
   constructor(config) {
-    this.logger = new Logger('CLIENT MANAGER', config);
-    this.config = config;
-    this.sockets = null;
+    this.logger = new Logger('CLIENT MANAGER', config)
+    this.config = config
+    this.sockets = null
     this.data = {
       sessions: {},
       users: {},
@@ -21,50 +21,50 @@ class ClientManager {
   }
 
   addUser(user) {
-    this.data.users[user.getId()] = user;
+    this.data.users[user.getId()] = user
   };
 
   getUser(sessionIdentifier) {
-    return this.data.users[sessionIdentifier] || null;
+    return this.data.users[sessionIdentifier] || null
   };
 
   getUsers() {
-    return this.data.users || {};
+    return this.data.users || {}
   };
 
   addClientInstance(id, data) {
-    this.data.instances[id] = data;
+    this.data.instances[id] = data
   };
 
   getClientInstance(id) {
-    return this.data.instances[id] || null;
+    return this.data.instances[id] || null
   };
 
   getClientInstances() {
-    return this.data.instances || {};
+    return this.data.instances || {}
   };
 
   static initialize(io, config) {
     return new Promise(function (resolve, reject) {
       try {
-        let game = new ClientManager(config);
-        game.sockets = io;
-        resolve(game);
+        let game = new ClientManager(config)
+        game.sockets = io
+        resolve(game)
       } catch (e) {
-        reject();
+        reject()
       }
-    });
+    })
   }
 
   getUserBySocketId(id) {
-    return this.data.users[this.data.sessions[id]];
+    return this.data.users[this.data.sessions[id]]
   }
 
   bindSocketToModuleEvents(socket) {
-    var that = this;
+    var that = this
     try {
       socket.on('error', function (data) {
-        that.error(data, socket);
+        that.error(data, socket)
       });
       socket.on('query', function (data) {
         that.query(data, socket)
@@ -102,18 +102,22 @@ class ClientManager {
 
   join(data, socket) {
     try {
-      let user     = this.getUserBySocketId(socket.id)
       var instance = this.getClientInstance(data.id)
       if (instance) {
-        if (user.canJoin(instance)) {
-          let joinedInstance = this.getClientInstance(user.getInstance())
-          if (joinedInstance && user.canLeave(joinedInstance)) {
-            user.leave(joinedInstance)
+        if (instance.acceptsJoins()) {
+          let user = this.getUserBySocketId(socket.id)
+          if (user.canJoin(instance)) {
+            let joinedInstance = this.getClientInstance(user.getInstance())
+            if (joinedInstance && user.canLeave(joinedInstance)) {
+              user.leave(joinedInstance)
+            }
+            user.join(instance)
+            this.logger.verbose('[JOIN] ' + JSON.stringify(data))
+          } else {
+            this.logger.verbose('[JOIN] Invalid ' + JSON.stringify(data))
           }
-          user.join(instance)
-          this.logger.verbose('[JOIN] ' + JSON.stringify(data))
         } else {
-          this.logger.verbose('[JOIN] Invalid ' + JSON.stringify(data))
+          this.logger.verbose('[JOIN] Instance not accepting user joins')
         }
       } else {
         this.logger.verbose('[JOIN] Instance ' + data.id + ' not available')
@@ -128,11 +132,11 @@ class ClientManager {
       let user           = this.getUserBySocketId(socket.id)
       let joinedInstance = this.getClientInstance(user.getInstance())
       if (joinedInstance && user.canAct(joinedInstance)) {
-        user.act(joinedInstance, data.action)
+        joinedInstance.act(data.type, user)
       }
-      this.logger.verbose('[ACTION] ' + data.action)
+      this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
     } catch (e) {
-      this.logger.error('[ACTION] ' + JSON.stringify(info) + ' ' + e)
+      this.logger.error('[ACTION] ' + JSON.stringify(data) + ' ' + e)
     }
   }
 

@@ -116,12 +116,12 @@ export function joinInstance(id) {
   return {type: types.USER_JOIN_INSTANCE_REQUESTED, payload: {id: id}}
 }
 
-export function actionInstance(action) {
+export function actionInstance(type, data) {
   if (Config.environment.isVerbose()) {
     console.log('[Action   ] Run ' + types.USER_ACTION_INSTANCE_REQUESTED)
   }
-  emitUserAction(action)
-  return {type: types.USER_ACTION_INSTANCE_REQUESTED, payload: {action: action}}
+  emitUserAction(type, data)
+  return {type: types.USER_ACTION_INSTANCE_REQUESTED, payload: {type: type, data: data}}
 }
 
 function joinInstanceReception(data) {

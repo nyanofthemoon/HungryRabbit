@@ -29,11 +29,11 @@ export function emitUserJoin(id) {
   socket.emit('join', {id: id})
 }
 
-export function emitUserAction(action) {
+export function emitUserAction(type, data) {
   if (Config.environment.isVerbose()) {
     console.log('[WebSocket] Emit User Action')
   }
-  socket.emit('action', {action: action})
+  socket.emit('action', {type: type, data: data})
 }
 
 export function emitUserLeave(id) {

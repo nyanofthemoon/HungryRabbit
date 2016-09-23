@@ -8,6 +8,8 @@ import * as types from './constant'
 let socket
 let dispatch = Store.dispatch
 
+let queryInterval
+
 function _getState() {
   return Store.getState()
 }
@@ -61,16 +63,36 @@ function connectSocketFailure(message) {
   dispatch({type: types.CONNECT_SOCKET_FAILED})
 }
 
+
+export function restartInstance() {
+  if (queryInterval) {
+    clearInterval(queryInterval)
+  }
+  emitSocketInstanceUpdateEvent(Config.instance.id, {
+    status: 'waiting',
+    users: {},
+    taps: {},
+    maxTaps: 0
+  })
+}
+
 export function startInstance() {
+  if (queryInterval) {
+    clearInterval(queryInterval)
+  }
   emitSocketInstanceUpdateEvent(Config.instance.id, {
     status: 'started'
   })
+  queryInterval = setInterval(function() {
+    emitSocketInstanceQueryEvent(Config.instance.id)
+  }, 333)
 }
 
 export function stopInstance() {
   emitSocketInstanceUpdateEvent(Config.instance.id, {
     status: 'stopped'
   })
+  clearInterval(queryInterval)
 }
 
 export function queryInstance() {
@@ -85,6 +107,7 @@ function queryInstanceReception(data) {
   if (Config.environment.isVerbose()) {
     console.log('[Action   ] Run ' + types.QUERY_INSTANCE_RECEIVED)
   }
+  console.log(data)
   dispatch({type: types.QUERY_INSTANCE_RECEIVED, payload: data.data})
 }
 

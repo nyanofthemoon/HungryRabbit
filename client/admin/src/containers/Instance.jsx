@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-import {startInstance, stopInstance} from './../actions'
+import {startInstance, restartInstance} from './../actions'
 
 class Instance extends Component {
   render() {
@@ -19,7 +19,7 @@ class Instance extends Component {
         return (
           <div className="instance">
             Game In Progress - Display Dashboard
-            <button type="button" onClick={stopInstance}>Stop</button>
+            <button type="button" onClick={restartInstance}>Restart</button>
           </div>
         )
       case 'stoppped':
