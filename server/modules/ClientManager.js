@@ -104,7 +104,7 @@ class ClientManager {
     try {
       var instance = this.getClientInstance(data.id)
       if (instance) {
-        if (instance.acceptsJoins()) {
+        if (instance.isAcceptingJoins()) {
           let user = this.getUserBySocketId(socket.id)
           if (user.canJoin(instance)) {
             let joinedInstance = this.getClientInstance(user.getInstance())
@@ -132,7 +132,7 @@ class ClientManager {
       let user           = this.getUserBySocketId(socket.id)
       let joinedInstance = this.getClientInstance(user.getInstance())
       if (joinedInstance && user.canAct(joinedInstance)) {
-        joinedInstance.act(data.type, user)
+        joinedInstance.act(data, user)
       }
       this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
     } catch (e) {

@@ -48,8 +48,8 @@ class ClientInstance {
     this.data.status = CLIENT_INSTANCE_STATUS_STOP
   }
 
-  isAcceptingJoin() {
-    return (CLIENT_INSTANCE_STATUS_WAIT === this.data.state)
+  isAcceptingJoins() {
+    return (CLIENT_INSTANCE_STATUS_WAIT === this.data.status)
   }
 
   query() {
@@ -93,11 +93,11 @@ class ClientInstance {
 
   // Actions
 
-  act(type, user) {
+  act(data, user) {
     if (CLIENT_INSTANCE_STATUS_START === this.getStatus()) {
-      switch (type) {
+      switch (data.type) {
         case 'tap':
-          this._tap(user, 1)
+          this._tap(user, parseInt(data.data))
           break
         default:
           break
@@ -106,6 +106,9 @@ class ClientInstance {
   }
 
   _tap(user, value) {
+    if (!this.data.taps[user.getId()]) {
+      this.data.taps[user.getId()] = 0
+    }
     this.data.taps[user.getId()] = this.data.taps[user.getId()] + value
   }
 

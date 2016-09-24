@@ -67,7 +67,7 @@ class User {
   }
 
   canAct(instance) {
-    return !instance.hasUser(this)
+    return instance.hasUser(this)
   }
 
   canLeave(instance) {
