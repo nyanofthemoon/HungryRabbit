@@ -89,10 +89,14 @@ h2.title {
   font-size  : 4vmin;
 }
 
-/* Connected Screen */
+/* Admin Screen */
+
+/* User Screen */
 
 .tap {
   transition: all 0.2s ease;
+  width: 75vw;
+  height: 75vh;
 }
 
 .tap:active {

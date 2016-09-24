@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import * as _ from 'lodash'
 
 import Store      from './store'
 import {createSocketConnection, emitSocketInstanceQueryEvent, emitSocketInstanceUpdateEvent} from './helpers/socket'

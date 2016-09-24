@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-var sanitizer = require('sanitizer');
+var sanitizer = require('sanitizer')
 
-let Logger         = require('./Logger');
-let ClientInstance = require('./ClientInstance');
-let User           = require('./User');
+let Logger         = require('./Logger')
+let ClientInstance = require('./ClientInstance')
+let User           = require('./User')
 
 class ClientManager {
 
@@ -17,32 +17,32 @@ class ClientManager {
       users: {},
       instances: {},
       admin: {}
-    };
+    }
   }
 
   addUser(user) {
     this.data.users[user.getId()] = user
-  };
+  }
 
   getUser(sessionIdentifier) {
     return this.data.users[sessionIdentifier] || null
-  };
+  }
 
   getUsers() {
     return this.data.users || {}
-  };
+  }
 
   addClientInstance(id, data) {
     this.data.instances[id] = data
-  };
+  }
 
   getClientInstance(id) {
     return this.data.instances[id] || null
-  };
+  }
 
   getClientInstances() {
     return this.data.instances || {}
-  };
+  }
 
   static initialize(io, config) {
     return new Promise(function (resolve, reject) {
@@ -65,7 +65,7 @@ class ClientManager {
     try {
       socket.on('error', function (data) {
         that.error(data, socket)
-      });
+      })
       socket.on('query', function (data) {
         that.query(data, socket)
       })
@@ -84,11 +84,11 @@ class ClientManager {
   }
 
   bindSocketToAdminModuleEvents(socket) {
-    var that = this;
+    var that = this
     try {
       socket.on('error', function (data) {
-        that.error(data, socket);
-      });
+        that.error(data, socket)
+      })
       socket.on('query', function (data) {
         that.query(data, socket)
       })
