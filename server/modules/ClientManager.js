@@ -131,10 +131,14 @@ class ClientManager {
     try {
       let user           = this.getUserBySocketId(socket.id)
       let joinedInstance = this.getClientInstance(user.getInstance())
-      if (joinedInstance && user.canAct(joinedInstance)) {
-        joinedInstance.act(data, user)
+      if (joinedInstance && true === joinedInstance.isAcceptingActions() && user.canAct(joinedInstance)) {
+        let over = joinedInstance.act(data, user)
+        if (true === over) {
+          this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data) + ' - Game has ended!')
+        } else {
+          this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
+        }
       }
-      this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
     } catch (e) {
       this.logger.error('[ACTION] ' + JSON.stringify(data) + ' ' + e)
     }
@@ -183,10 +187,11 @@ class ClientManager {
           let instance = this.data.instances[data.id]
           if (!instance) {
             instance = new ClientInstance(this.config)
-            instance.initialize(this.sockets, { id: data.id })
+            instance.initialize(this.sockets, { id: data.id, type: this.config.instance.defaultType })
             instance.wait()
             this.addClientInstance(data.id, instance)
           } else {
+            data.data.type = this.config.instance.defaultType
             instance.initialize(this.sockets, data.data)
           }
           info = instance.query()

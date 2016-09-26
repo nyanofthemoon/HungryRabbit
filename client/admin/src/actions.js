@@ -69,10 +69,9 @@ export function restartInstance() {
     clearInterval(queryInterval)
   }
   emitSocketInstanceUpdateEvent(Config.instance.id, {
-    status: 'waiting',
-    users: {},
-    taps: {},
-    maxTaps: 0
+    status  : 'waiting',
+    users   : {},
+    state   : {}
   })
 }
 
@@ -107,7 +106,9 @@ function queryInstanceReception(data) {
   if (Config.environment.isVerbose()) {
     console.log('[Action   ] Run ' + types.QUERY_INSTANCE_RECEIVED)
   }
-  console.log(data)
+  if ('stopped' === data.data.status) {
+    clearInterval(queryInterval)
+  }
   dispatch({type: types.QUERY_INSTANCE_RECEIVED, payload: data.data})
 }
 

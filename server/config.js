@@ -12,6 +12,14 @@ module.exports = {
     }
   },
 
+  instance: {
+    defaultType: 'tap'
+  },
+
+  tapConfig: {
+    maxTaps: 5
+  },
+
   user: {
     defaultName: 'Unnamed'
   }
