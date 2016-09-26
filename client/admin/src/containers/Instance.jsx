@@ -22,10 +22,12 @@ class Instance extends Component {
             <button type="button" onClick={restartInstance}>Restart</button>
           </div>
         )
-      case 'stoppped':
+      case 'stopped':
         return (
           <div className="instance">
             <h1>It's Over</h1>
+            <h2>Winner is {instance.getIn(['data','endState','winner','user','name'])}</h2>
+            <button type="button" onClick={restartInstance}>Restart</button>
           </div>
         )
     }
