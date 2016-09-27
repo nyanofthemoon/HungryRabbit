@@ -91,3 +91,33 @@ h2.title {
 
 /* Connected Screen */
 
+/* Dashboard - Admin */
+
+.instance {
+  background-color: cornflowerblue;
+  width: 100vw;
+  height: 100vh;
+}
+
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.board {
+  height: 100vh;
+  display: flex;
+  flex-direction: column-reverse;
+  border: 1px solid orange;
+}
+
+.board-data {
+  color: #2B2922;
+}
+
+.board-id {
+  color: #2B2922;
+}

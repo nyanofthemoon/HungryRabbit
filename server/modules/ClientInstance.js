@@ -130,16 +130,12 @@ class ClientInstance {
   }
 
   _tapReached() {
-    let highest = _.max(Object.keys(this.data.state), function (o) {
-      return this.data.state[o]
-    })
+    let highest = Object.keys(_.mapValues(this.data.state,parseInt))[0]
     return (this.data.state[highest] >= this.data.condition)
   }
 
   _tapEndState() {
-    let winnerId = _.max(Object.keys(this.data.state), function (o) {
-      return this.data.state[o]
-    })
+    let winnerId = Object.keys(_.mapValues(this.data.state,parseInt))[0]
     return {
       winner: {
         id  : winnerId,

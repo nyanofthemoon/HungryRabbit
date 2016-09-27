@@ -8,7 +8,10 @@ const initialState = fromJS({
   data: {
     id    : null,
     status: null,
-    users : []
+    type  : null,
+    users : {},
+    state : {},
+    endState: {}
   }
 })
 

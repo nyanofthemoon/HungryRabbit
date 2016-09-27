@@ -17,7 +17,7 @@ module.exports = {
   },
 
   tapConfig: {
-    maxTaps: 5
+    maxTaps: 10
   },
 
   user: {

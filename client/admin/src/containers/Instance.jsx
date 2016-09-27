@@ -1,9 +1,27 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
+let _ = require('lodash')
+
 import {startInstance, restartInstance} from './../actions'
 
 class Instance extends Component {
+
+  _getUser(id) {
+    return this.props.instance.getIn(['data','users', id])
+  }
+
+  _getOrderedTaps() {
+    let data = _.mapValues(this.props.instance.getIn(['data', 'state']).toJSON(),parseInt)
+    let taps = []
+    let that = this
+    Object.keys(data).forEach(function(key) {
+      let user = that._getUser(key)
+      taps.push({id: user.get('name'), data: data[key]})
+    })
+    return taps.slice(0, 10)
+  }
+
   render() {
     const {instance} = this.props
     switch (instance.getIn(['data','status'])) {
@@ -18,7 +36,14 @@ class Instance extends Component {
       case 'started':
         return (
           <div className="instance">
-            Game In Progress - Display Dashboard
+            <div className="dashboard">
+              {this._getOrderedTaps().map(function(tap) {
+                return (<div key={tap.name} className="board">
+                  <div className="board-id">{tap.id}</div>
+                  <div className="board-data">{tap.data}</div>
+                </div>)
+              })}
+            </div>
             <button type="button" onClick={restartInstance}>Restart</button>
           </div>
         )
