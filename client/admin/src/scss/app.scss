@@ -94,12 +94,13 @@ h2.title {
 /* Dashboard - Admin */
 
 .instance {
-  background-color: cornflowerblue;
+  background-image: url('/admin/assets/img/background.png');
+  background-size: cover;
   width: 100vw;
   height: 100vh;
 }
 
-.dashboard {
+.list {
   height: 100vh;
   display: flex;
   flex-direction: row;
@@ -107,17 +108,17 @@ h2.title {
   align-items: flex-end;
 }
 
-.board {
+.list-item {
   height: 100vh;
   display: flex;
   flex-direction: column-reverse;
   border: 1px solid orange;
 }
 
-.board-data {
-  color: #2B2922;
+.carrot {
+  z-index: 10;
 }
 
-.board-id {
-  color: #2B2922;
+.rabbit {
+  z-index: 100;
 }

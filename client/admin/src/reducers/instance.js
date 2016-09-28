@@ -6,12 +6,12 @@ import * as types from './../constant'
 
 const initialState = fromJS({
   data: {
-    id    : null,
-    status: null,
-    type  : null,
-    users : {},
-    state : {},
-    endState: {}
+    id       : null,
+    status   : null,
+    type     : null,
+    users    : {},
+    state    : {},
+    condition: null
   }
 })
 

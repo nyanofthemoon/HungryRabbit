@@ -129,17 +129,27 @@ class ClientInstance {
     this.data.state[user.getId()] = this.data.state[user.getId()] + value
   }
 
+  _highestStateKey() {
+    let that = this
+    let data = _.take(Object.keys(this.data.state).map(function(key) {
+      return {id: key, data: that.data.state[key]}
+    }).sort(function(a, b) {
+      return b.data - a.data
+    }), 1)
+    return data[0].id || null
+  }
+
   _tapReached() {
-    let highest = Object.keys(_.mapValues(this.data.state,parseInt))[0]
+    let highest = this._highestStateKey()
     return (this.data.state[highest] >= this.data.condition)
   }
 
   _tapEndState() {
-    let winnerId = Object.keys(_.mapValues(this.data.state,parseInt))[0]
+    let highest = this._highestStateKey()
     return {
       winner: {
-        id  : winnerId,
-        user: this.data.users[winnerId]
+        id  : highest,
+        user: this.data.users[highest]
       }
     }
   }
