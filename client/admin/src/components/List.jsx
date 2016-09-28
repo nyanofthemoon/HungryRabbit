@@ -28,10 +28,10 @@ class List extends Component {
         {this._getProcessedList().map(function(item) {
           let pos = wh * (item.data / max)
           return (<div key={item.id} className="list-item">
-            <img style={{ position:'relative', top:pos, height: '100vh' }} src="/admin/assets/img/carrot.png"/>
+            <img className="carrot" style={{ top:pos }} src="/admin/assets/img/carrot.png"/>
             <div className="rabbit">
               <img src="/admin/assets/img/rabbit.png"/>
-              {item.id}
+              <div className="rabbit-text">{item.id}</div>
             </div>
           </div>)
         })}
