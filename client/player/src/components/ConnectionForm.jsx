@@ -21,7 +21,7 @@ class ConnectionForm extends Component {
     return (
       <form className="flex-horizontal-container" action="" onSubmit={this._handleFormSubmit.bind(this)}>
         <div>
-          <input type="text" ref="username" placeholder="username"/>
+          <input type="text" ref="username" placeholder="username" maxlength="20"/>
         </div>
         <div>
           <button type="submit">Login</button>
