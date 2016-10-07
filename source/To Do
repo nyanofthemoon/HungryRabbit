@@ -1,0 +1,23 @@
+To Fix (Paule):
+- When Admin Restarts Sessions Log Out?
+
+To Do (Paule):
+- Assign random colors based on name
+	- should be one color per player
+- Mouth animation
+- Admin dashboard nice centered large black font
+	- https://daneden.github.io/animate.css/
+	- bounceIn “Hungry Rabbit” Title
+- Admin dashboard waiting to start display player count
+	- https://daneden.github.io/animate.css/
+	- flipInX
+
+=====
+
+To Do (Nico):
+- “Design” Player Waiting Screen
+	- en attente message
+	- gros boutton rond gris
+- “Design” Player Playing Screen
+	- rouge round gros font, page bouge pas
+- “Design” Player Login Screen (moins laid)

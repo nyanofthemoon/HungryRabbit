@@ -16,7 +16,8 @@ class Instance extends Component {
       case 'waiting':
         return (
           <div className="instance">
-            <h1>Waiting For Players</h1>
+            <h1 className="title">It's Time To Join</h1>
+            <h2 className="title">{Object.keys(this.props.instance.getIn(['data', 'users']).toJSON()).length} Players</h2>
             <button type="button" onClick={startInstance}>Start</button>
           </div>
         )
@@ -30,8 +31,8 @@ class Instance extends Component {
       case 'stopped':
         return (
           <div className="instance">
-            <h1>It's Over</h1>
-            <h2>Winner is {instance.getIn(['data','endState','winner','user','name'])}</h2>
+            <h1 className="title">It's Over</h1>
+            <h2 className="title">Winner is {instance.getIn(['data','endState','winner','user','name'])}</h2>
             <button type="button" onClick={restartInstance}>Restart</button>
           </div>
         )

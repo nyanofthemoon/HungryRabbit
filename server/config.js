@@ -17,7 +17,7 @@ module.exports = {
   },
 
   tapConfig: {
-    maxTaps: 10
+    maxTaps: parseInt(process.env.MAX_TAPS) || 5
   },
 
   user: {

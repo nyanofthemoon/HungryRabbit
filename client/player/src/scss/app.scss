@@ -89,16 +89,30 @@ h2.title {
   font-size  : 4vmin;
 }
 
-/* Admin Screen */
-
 /* User Screen */
 
+body {
+  overflow: hidden;
+}
+
 .tap {
-  transition: all 0.2s ease;
-  width: 75vw;
-  height: 75vh;
+  transition: all 0.1s ease;
+  width: 35vw;
+  height: 35vw;
+  background-color: red;
+  border: 2px solid darkred;
+  color: white;
+  font-size: 5vw;
+  border-radius:18vw;
+  outline: none;
 }
 
 .tap:active {
-  transform: scale(1.3)
+  transform: scale(1.1)
+}
+
+.disabled {
+  background-color: grey;
+  border: 2px solid #555555;
+  color: black;
 }

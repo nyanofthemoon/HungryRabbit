@@ -15,8 +15,7 @@ class ClientManager extends Component {
       case 'connecting':
       case 'disconnected':
         return (<div className="light-text text-centered">
-          <h1 className="title">Client Manager</h1>
-          <h2 className="title">Please enter your name below.</h2>
+          <h1 className="title">Your Name?</h1>
           <ConnectionForm handleSubmit={actions.connectSocket}/>
         </div>)
       case 'connected':

@@ -112,6 +112,9 @@ class ClientManager {
               user.leave(joinedInstance)
             }
             user.join(instance)
+            if (this.data.admin.socket) {
+              this.data.admin.socket.emit('query', instance.query())
+            }
             this.logger.verbose('[JOIN] ' + JSON.stringify(data))
           } else {
             this.logger.verbose('[JOIN] Invalid ' + JSON.stringify(data))
@@ -134,6 +137,13 @@ class ClientManager {
       if (joinedInstance && true === joinedInstance.isAcceptingActions() && user.canAct(joinedInstance)) {
         let over = joinedInstance.act(data, user)
         if (true === over) {
+          let users = instance.getUsers()
+          Object.keys(users).forEach(function(id) {
+            if (users[id].socket) {
+              users[id].socket.leave(instance.getId())
+              users[id].socket.disconnect(true)
+            }
+          })
           this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data) + ' - Game has ended!')
         } else {
           this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
@@ -150,6 +160,9 @@ class ClientManager {
       let instance = this.getClientInstance(data.id)
       if (instance && user.canLeave(instance)) {
         user.leave(instance)
+        if (this.data.admin.socket) {
+          this.data.admin.socket.emit('query', instance.query())
+        }
         this.logger.verbose('[LEAVE] ' + JSON.stringify(data))
       } else {
         this.logger.verbose('[LEAVE] Invalid ' + JSON.stringify(data))

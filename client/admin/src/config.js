@@ -31,6 +31,6 @@ export default {
   },
   instance: {
     id     : 'default',
-    listMax: 10
+    listMax: 7
   }
 }
