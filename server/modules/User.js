@@ -65,7 +65,6 @@ class User {
     this.data.instance = instanceId
     instance.addUser(this)
     this.socket.emit('query', instance.query())
-    this.socket.to(instanceId).emit('join', this.query())
   }
 
   canAct(instance) {
@@ -73,7 +72,9 @@ class User {
   }
 
   canLeave(instance) {
-    return instance.hasUser(this)
+    return true
+    //@TODO Fix this
+    // return instance.hasUser(this)
   }
 
   leave(instance) {
