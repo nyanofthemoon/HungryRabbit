@@ -155,6 +155,7 @@ class ClientManager {
   }
 
   leave(data, socket) {
+  leave(data, socket) {
     try {
       let user = this.getUserBySocketId(socket.id)
       let instance = this.getClientInstance(data.id)

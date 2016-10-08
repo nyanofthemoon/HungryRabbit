@@ -54,7 +54,9 @@ class User {
   }
 
   canJoin(instance) {
-    return !instance.hasUser(this)
+    return true
+    //@TODO Fix this
+    //return !instance.hasUser(this)
   }
 
   join(instance) {
