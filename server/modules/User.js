@@ -14,6 +14,7 @@ class User {
     this.socket = null
     this.data = {
       name    : CONFIG.user.defaultName,
+      image   : null,
       instance: null
     }
   }
@@ -46,7 +47,8 @@ class User {
     var struct = {
       'type': 'user',
       'data': {
-        'name': this.getName()
+        'name' : this.getName(),
+        'image': this.data.image
       }
     }
 

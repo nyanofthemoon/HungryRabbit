@@ -88,6 +88,7 @@ class ClientInstance {
     delete this.data.users[user.getId()]
     switch (this.data.type) {
       case 'tap':
+        user.data.image = null
         delete this.data.state[user.getId()]
         break
       default:
@@ -96,14 +97,15 @@ class ClientInstance {
   }
 
   addUser(user) {
-    this.data.users[user.getId()] = user.query().data
     switch (this.data.type) {
       case 'tap':
+        user.data.image = Math.floor(Math.random() * 7) + 1;
         this._tap(user, 0)
         break
       default:
         break
     }
+    this.data.users[user.getId()] = user.query().data
   }
 
   // Actions

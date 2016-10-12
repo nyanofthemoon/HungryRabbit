@@ -14,7 +14,7 @@ class List extends Component {
     let state = this.props.data.get('state').toJSON()
     return _.take(Object.keys(state).map(function(key) {
       let user = that._getUser(key)
-      return {id: user.get('name'), data: state[key]}
+      return {id: user.get('name'), image: user.get('image'), data: state[key]}
     }).sort(function(a, b) {
       return b.data - a.data
     }), that.props.max)
@@ -30,7 +30,7 @@ class List extends Component {
           return (<div key={item.id} className="list-item">
             <img className="carrot" style={{ top:pos }} src="/admin/assets/img/carrot.png"/>
             <div className="rabbit">
-              <img src="/admin/assets/img/rabbit.png"/>
+              <img id={'rabbit-' + item.id} src={'/admin/assets/img/rabbit-' + item.image + '-open.png'}/>
               <div className="rabbit-text">{item.id}</div>
             </div>
           </div>)
