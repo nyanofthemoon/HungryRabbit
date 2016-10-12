@@ -31,7 +31,7 @@ class List extends Component {
             <img className="carrot" style={{ top:pos }} src="/admin/assets/img/carrot.png"/>
             <div className="rabbit">
               <img id={'rabbit-' + item.id} src={'/admin/assets/img/rabbit-' + item.image + '-open.png'}/>
-              <div className="rabbit-text">{item.id}</div>
+              <div className={'rabbit-text rabbit-text-' + item.image}>{item.id}</div>
             </div>
           </div>)
         })}

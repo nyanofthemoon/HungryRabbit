@@ -152,10 +152,45 @@ h3.title {
 .rabbit-text {
   position: absolute;
   bottom: 0;
-  border-top: 20px solid dodgerblue;
-  border-bottom: 20px solid dodgerblue;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
   background-color: whitesmoke;
   color: black;
   text-align: center;
   width: 73%;
+}
+
+.rabbit-text-1 {
+  border-top-color: #0066ff;
+  border-bottom-color: #0066ff;
+}
+
+.rabbit-text-2 {
+  border-top-color: #6600ff;
+  border-bottom-color: #6600ff;
+}
+
+.rabbit-text-3 {
+  border-top-color: #ff00ff;
+  border-bottom-color: #ff00ff;
+}
+
+.rabbit-text-4 {
+  border-top-color: #66cc66;
+  border-bottom-color: #66cc66;
+}
+
+.rabbit-text-5 {
+  border-top-color: #666666;
+  border-bottom-color: #666666;
+}
+
+.rabbit-text-6 {
+  border-top-color: #ff3300;
+  border-bottom-color: #ff3300;
+}
+
+.rabbit-text-7 {
+  border-top-color: #ffcc00;
+  border-bottom-color: #ffcc00;
 }
