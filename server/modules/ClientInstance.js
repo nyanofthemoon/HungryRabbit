@@ -86,6 +86,13 @@ class ClientInstance {
 
   removeUser(user) {
     delete this.data.users[user.getId()]
+    switch (this.data.type) {
+      case 'tap':
+        delete this.data.state[user.getId()]
+        break
+      default:
+        break
+    }
   }
 
   addUser(user) {
@@ -102,7 +109,7 @@ class ClientInstance {
   // Actions
 
   act(data, user) {
-    switch (data.type) {
+    switch (this.data.type) {
       case 'tap':
         this._tap(user, parseInt(data.data))
         break
@@ -113,7 +120,7 @@ class ClientInstance {
   }
 
   over(data) {
-    switch (data.type) {
+    switch (this.data.type) {
       case 'tap':
         let tapOver = this._tapReached()
         if (true === tapOver) {

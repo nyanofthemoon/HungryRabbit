@@ -71,7 +71,8 @@ export function restartInstance() {
   emitSocketInstanceUpdateEvent(Config.instance.id, {
     status  : 'waiting',
     users   : {},
-    state   : {}
+    state   : {},
+    endState: {}
   })
 }
 

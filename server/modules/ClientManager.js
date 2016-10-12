@@ -24,6 +24,10 @@ class ClientManager {
     this.data.users[user.getId()] = user
   }
 
+  getUserById(id) {
+    return this.data.users[id]
+  }
+
   getUser(sessionIdentifier) {
     return this.data.users[sessionIdentifier] || null
   }
@@ -136,15 +140,18 @@ class ClientManager {
       let joinedInstance = this.getClientInstance(user.getInstance())
       if (joinedInstance && true === joinedInstance.isAcceptingActions() && user.canAct(joinedInstance)) {
         let over = joinedInstance.act(data, user)
-        if (true === over) {
-          let users = instance.getUsers()
+        if (true == over) {
+          let users = joinedInstance.getUsers()
+          let that = this
           Object.keys(users).forEach(function(id) {
-            if (users[id].socket) {
-              users[id].socket.leave(instance.getId())
-              users[id].socket.disconnect(true)
+            let iuser = that.getUserById(id)
+            joinedInstance.removeUser(iuser)
+            if (iuser.socket) {
+              iuser.socket.leave(joinedInstance.getId())
+              iuser.socket.disconnect(true)
             }
           })
-          this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data) + ' - Game has ended!')
+          this.logger.info('[ACTION] ' + user.getId() + ' won the game')
         } else {
           this.logger.verbose('[ACTION] ' + user.getId() + ' ' + JSON.stringify(data))
         }
