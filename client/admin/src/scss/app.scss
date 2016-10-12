@@ -79,19 +79,27 @@ button {
 /* Disconnected Screen */
 
 h1.title {
-  margin-top : 0;
   font-size  : 5em;
   text-shadow: 3px 3px $median-color;
 }
 
 h2.title {
-  margin-top : 0;
+  font-size  : 3.5em;
+}
+
+h3.title {
   font-size  : 3em;
 }
 
 /* Connected Screen */
 
 /* Dashboard - Admin */
+
+.button {
+  font-size  : 2em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
 
 .instance {
   background-image: url('/admin/assets/img/background.jpg');

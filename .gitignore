@@ -1,5 +1,5 @@
 .npm-debug.log
 .sass-cache
-client/admin/assets/js/*
-client/player/assets/js/*
+client/admin/assets/js
+client/player/assets/js
 node_modules

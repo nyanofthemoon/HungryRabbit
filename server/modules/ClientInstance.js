@@ -31,7 +31,6 @@ class ClientInstance {
     deepExtend(this.data, data)
     switch(data.type) {
       case 'tap':
-        this.data.state = {}
         this.data.condition = CONFIG.tapConfig.maxTaps
         break
       default: break
@@ -91,6 +90,13 @@ class ClientInstance {
 
   addUser(user) {
     this.data.users[user.getId()] = user.query().data
+    switch (this.data.type) {
+      case 'tap':
+        this._tap(user, 0)
+        break
+      default:
+        break
+    }
   }
 
   // Actions

@@ -52,8 +52,8 @@ function connectSocketSuccess() {
   })
   dispatch({type: types.UPDATE_INSTANCE_REQUESTED})
   emitSocketInstanceUpdateEvent(Config.instance.id, {})
-  bindWindowResizeEvent()
-  window.dispatchEvent(new Event('resize'))
+  //bindWindowResizeEvent()
+  //window.dispatchEvent(new Event('resize'))
 }
 
 function connectSocketFailure(message) {

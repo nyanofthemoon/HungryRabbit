@@ -30,7 +30,9 @@ export default {
     }
   },
   instance: {
-    id     : 'default',
-    listMax: 7
+    id        : 'default',
+    listMax   : 7,
+    minPlayers: 1,
+    joinTimer : 10, // seconds
   }
 }
