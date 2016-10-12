@@ -30,7 +30,7 @@ class List extends Component {
           return (<div key={item.id} className="list-item">
             <img className="carrot" style={{ top:pos }} src="/admin/assets/img/carrot.png"/>
             <div className="rabbit">
-              <img id={'rabbit-' + item.id} src={'/admin/assets/img/rabbit-' + item.image + '-open.png'}/>
+              <img className="rabbit" id={'rabbit-' + item.id} src={'/admin/assets/img/rabbit-' + item.image + '-open.png'}/>
               <div className={'rabbit-text rabbit-text-' + item.image}>{item.id}</div>
             </div>
           </div>)

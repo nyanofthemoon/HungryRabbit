@@ -89,7 +89,7 @@ class Instance extends Component {
         if (count < Config.instance.minPlayers) {
           return (
             <div className="instance">
-              <h1 className="title animated rubberBand">Not Enough Players</h1>
+              <h1 className="title animated pulse">Not Enough Players</h1>
               <button type="button" className="button" onClick={this._restartTimer.bind(this)}>Restart</button>
             </div>
           )

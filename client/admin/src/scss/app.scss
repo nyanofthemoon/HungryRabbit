@@ -129,6 +129,7 @@ h3.title {
   height: 100vh;
   display: flex;
   flex-direction: column-reverse;
+  margin-right: 55px;
 }
 
 .carrot {
@@ -136,11 +137,10 @@ h3.title {
   width: 100%;
   z-index: 10;
   position: relative;
-  top: -100px;
-  padding-left: 139px;
+  padding-left: 137px;
 }
 
-.rabbit {
+div.rabbit {
   z-index: 100;
   position: absolute;
   bottom: 0;

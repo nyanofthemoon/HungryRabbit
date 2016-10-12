@@ -47,6 +47,7 @@ class User {
     var struct = {
       'type': 'user',
       'data': {
+        'id'   : this.getId(),
         'name' : this.getName(),
         'image': this.data.image
       }

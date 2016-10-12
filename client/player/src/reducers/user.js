@@ -5,7 +5,9 @@ import * as types from './../constant'
 
 const initialState = fromJS({
   data: {
+    id      : null,
     name    : 'Unnamed',
+    image   : null,
     instance: null
   }
 })

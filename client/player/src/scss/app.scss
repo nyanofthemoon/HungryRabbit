@@ -97,13 +97,13 @@ body {
 
 .tap {
   transition: all 0.1s ease;
-  width: 35vw;
-  height: 35vw;
+  width: 50vw;
+  height: 50vw;
   background-color: red;
   border: 2px solid darkred;
   color: white;
-  font-size: 5vw;
-  border-radius:18vw;
+  font-size: 10vw;
+  border-radius:25vw;
   outline: none;
 }
 
@@ -115,4 +115,9 @@ body {
   background-color: grey;
   border: 2px solid #555555;
   color: black;
+}
+
+.image {
+  width: 125px;
+  margin-left: -25px;
 }

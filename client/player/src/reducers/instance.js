@@ -9,7 +9,7 @@ const initialState = fromJS({
   data: {
     id    : null,
     status: null,
-    users : []
+    users : {}
   }
 })
 

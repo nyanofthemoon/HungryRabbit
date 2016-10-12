@@ -15,7 +15,7 @@ class ClientInstance extends Component {
   }
 
   render() {
-    const {instance} = this.props
+    const {instance, user} = this.props
     switch (instance.get('state')) {
       default:
       case 'unjoined':
@@ -25,18 +25,20 @@ class ClientInstance extends Component {
           </div>
         )
       case 'joined':
+        let uid   = user.getIn(['data', 'id'])
+        let iuser = instance.getIn(['data', 'users', uid]) || {}
         switch (instance.getIn(['data','status'])) {
           default:
           case 'waiting':
             return (
               <div className="instance">
-                <User enabled={false} handleTouchTap={this._handleEmptyTap.bind(this)} handleClick={this._handleEmptyTap.bind(this)} />
+                <User enabled={false} user={iuser} handleTouchTap={this._handleEmptyTap.bind(this)} handleClick={this._handleEmptyTap.bind(this)} />
               </div>
             )
           case 'started':
             return (
               <div className="instance">
-                <User enabled={true} handleTouchTap={this._handleTap.bind(this)} handleClick={this._handleTap.bind(this)} />
+                <User enabled={true} user={iuser} handleTouchTap={this._handleTap.bind(this)} handleClick={this._handleTap.bind(this)} />
               </div>
             )
           case 'stopped':
@@ -56,12 +58,14 @@ ClientInstance.contextTypes = {
 
 ClientInstance.propTypes = {
   instance: PropTypes.object.isRequired,
+  user    : PropTypes.object.isRequired,
   actions : PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    instance: state.instance
+    instance: state.instance,
+    user    : state.user
   }
 }
 

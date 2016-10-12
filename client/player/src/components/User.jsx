@@ -6,15 +6,26 @@ class User extends Component {
   render() {
     if (true === this.props.enabled) {
       return (
-        <button className='tap' type="button" onTouchTap={this.props.handleTouchTap} onClick={this.props.handleClick}>
-          Tap!
-        </button>
+        <div>
+          <img className='image' src={'/admin/assets/img/rabbit-' + this.props.user.get('image') + '-closed.png'}/>
+          <h1>{this.props.user.get('name')}</h1>
+          <br />
+          <button className='tap' type="button" onTouchTap={this.props.handleTouchTap} onClick={this.props.handleClick}>
+            Tap!
+          </button>
+          <br />
+        </div>
       )
     } else {
       return (
-        <button className='tap disabled' type="button">
-          Wait
-        </button>
+        <div>
+          <img className='image' src={'/admin/assets/img/rabbit-' + this.props.user.get('image') + '-closed.png'}/>
+          <h1>{this.props.user.get('name')}</h1>
+          <br />
+          <button className='tap disabled' type="button">
+            Wait
+          </button>
+        </div>
       )
     }
   }
