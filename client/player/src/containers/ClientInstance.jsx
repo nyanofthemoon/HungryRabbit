@@ -39,7 +39,7 @@ class ClientInstance extends Component {
                 <User enabled={true} handleTouchTap={this._handleTap.bind(this)} handleClick={this._handleTap.bind(this)} />
               </div>
             )
-          case 'stoppped':
+          case 'stopped':
             return (
               <div className="instance">
                 <h1>It's Over</h1>
