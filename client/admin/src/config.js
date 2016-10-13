@@ -31,7 +31,7 @@ export default {
   },
   instance: {
     id        : 'default',
-    listMax   : 7,
+    listMax   : 5,
     minPlayers: 1,
     joinTimer : 30, // seconds
   }
