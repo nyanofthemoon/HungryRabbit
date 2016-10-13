@@ -3,6 +3,8 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import {startInstance, restartInstance} from './../actions'
+import {playMusic, playSound} from './../helpers/audio'
+
 import List from '../components/List'
 
 import Config from './../config'
@@ -13,7 +15,8 @@ class Instance extends Component {
     super(props)
     this.state = {
       remaining: null,
-      interval : null
+      interval : null,
+      music    : null
     }
   }
 
@@ -29,6 +32,15 @@ class Instance extends Component {
         that._update()
       }, 1000)
     })
+  }
+
+  _playMusic(id) {
+    if (this.state.music != id) {
+      playMusic(id)
+      this.setState({
+        music: id
+      })
+    }
   }
 
   _restartTimer() {
@@ -67,6 +79,10 @@ class Instance extends Component {
       default:
       case 'waiting':
         if (!this.state.interval) {
+          let that = this
+          setTimeout(function() {
+            that._playMusic('title-screen')
+          }, 750)
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">Hungry Rabbit</h1>
@@ -74,6 +90,7 @@ class Instance extends Component {
             </div>
           )
         } else {
+          this._playMusic('wait-screen')
           let location = window.location
           let joinUrl  = location.protocol + '//' + location.hostname
           return (
@@ -87,6 +104,7 @@ class Instance extends Component {
       case 'started':
         let count = Object.keys(instance.getIn(['data', 'users']).toJSON()).length
         if (count < Config.instance.minPlayers) {
+          this._playMusic('title-screen')
           return (
             <div className="instance">
               <h1 className="title animated pulse">Not Enough Players</h1>
@@ -94,13 +112,15 @@ class Instance extends Component {
             </div>
           )
         } else {
+          this._playMusic('game-screen')
           return (
             <div className="instance">
-              <List max={Config.instance.listMax} data={instance.get('data')}/>
+              <List max={Config.instance.listMax} data={instance.get('data')} playSound={playSound}/>
             </div>
           )
         }
       case 'stopped':
+        this._playMusic('over-screen')
         return (
           <div className="instance">
             <h1 className="title animated tada">The Winner Is</h1>
