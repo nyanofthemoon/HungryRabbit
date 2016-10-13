@@ -2,11 +2,13 @@ let host    = window.location.hostname
 let name    = 'production'
 let port    = ''
 let verbose = false
+let wait    = 120
 
 if (['localhost', '127.0.0.1'].indexOf(host) > -1) {
   name    = 'development'
   port    = ':8888'
   verbose = true
+  wait    = 5
 }
 
 export default {
@@ -31,8 +33,8 @@ export default {
   },
   instance: {
     id        : 'default',
-    listMax   : 5,
+    listMax   : 7,
     minPlayers: 1,
-    joinTimer : 30, // seconds
+    joinTimer : wait // seconds
   }
 }

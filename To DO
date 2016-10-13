@@ -1,0 +1,23 @@
+Bugs?
+
+- When using same name cannot rejoin ?
+- What to do with duplicate names : add an increment digit
+
+Music
+
+- Title Screen
+- Wait Screen (30 secs)
+- Game Play Screen
+- Game Over Screen
+
+Sound
+
+- Mouth Sound (1/5 random per mouth animation)
+
+Needed
+
+- Front Face Rabbit for Title Screen
+
+Domain Name
+
+- Redirect to HerokuApp (nico will give domain)
