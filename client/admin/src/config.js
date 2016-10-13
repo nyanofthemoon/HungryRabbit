@@ -33,6 +33,6 @@ export default {
     id        : 'default',
     listMax   : 7,
     minPlayers: 1,
-    joinTimer : 10, // seconds
+    joinTimer : 5, // seconds
   }
 }

@@ -85,7 +85,7 @@ export function startInstance() {
   })
   queryInterval = setInterval(function() {
     emitSocketInstanceQueryEvent(Config.instance.id)
-  }, 250)
+  }, 200)
 }
 
 export function stopInstance() {
