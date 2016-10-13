@@ -41,7 +41,9 @@ class List extends Component {
             setTimeout(function() {
               let image = document.querySelector('#rabbit-' + item.id)
               if (image) {
-                that.props.playSound('munch')
+                if (Math.floor(Math.random() * 5) == 3) {
+                  that.props.playSound('munch')
+                }
                 image.src = '/admin/assets/img/rabbit-' + item.image + '-closed.png'
                 setTimeout(function() {
                   image.src = '/admin/assets/img/rabbit-' + item.image + '-open.png'
