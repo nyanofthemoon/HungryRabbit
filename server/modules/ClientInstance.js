@@ -99,7 +99,7 @@ class ClientInstance {
   addUser(user) {
     switch (this.data.type) {
       case 'tap':
-        user.data.image = Math.floor(Math.random() * 7) + 1;
+        user.data.image = Math.floor(Math.random() * 10) + 1;
         this._tap(user, 0)
         break
       default:
