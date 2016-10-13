@@ -2,10 +2,10 @@ import {Howl} from 'howler'
 
 let audio = {
   music: [
-    {id: 'title-screen', track: new Howl({urls: ['/admin/assets/snd/title.wav'], volume: 0.5, loop: true})},
-    {id: 'wait-screen' , track: new Howl({urls: ['/admin/assets/snd/wait.wav'], volume: 0.5, loop: true})},
+    {id: 'title-screen', track: new Howl({urls: ['/admin/assets/snd/title.wav'], volume: 1, loop: true})},
+    {id: 'wait-screen' , track: new Howl({urls: ['/admin/assets/snd/wait.wav'], volume: 1, loop: true})},
     {id: 'game-screen',  track: new Howl({urls: ['/admin/assets/snd/play.wav'], volume: 0.5, loop: true})},
-    {id: 'over-screen',  track: new Howl({urls: ['/admin/assets/snd/over.wav'], volume: 0.5, loop: false})}
+    {id: 'over-screen',  track: new Howl({urls: ['/admin/assets/snd/over.wav'], volume: 1, loop: false})}
   ],
   sound: [
     {id: 'munch',  track: new Howl({urls: ['/admin/assets/snd/munch.wav'], loop: false})}
