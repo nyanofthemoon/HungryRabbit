@@ -86,6 +86,7 @@ class Instance extends Component {
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">Hungry Rabbit</h1>
+              <img src="/admin/assets/img/logo.png" style={{width:'25vmin'}}/>
               <button type="button" className="button" onClick={this._startTimer.bind(this)}>Start</button>
             </div>
           )
