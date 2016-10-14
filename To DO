@@ -1,18 +1,11 @@
-Bugs?
-
-- When using same name cannot rejoin ?
-- What to do with duplicate names : add an increment digit
-
 Music
 
-- Title Screen
-- Wait Screen (30 secs)
-- Game Play Screen
-- Game Over Screen
+- Change to music selected by Nico
 
 Sound
 
-- Mouth Sound (1/5 random per mouth animation)
+- Mouth Sound -> implement random sounds
+- Wait for sounds selected by Nico
 
 Needed
 

@@ -24,6 +24,10 @@ class ClientManager {
     this.data.users[user.getId()] = user
   }
 
+  removeUser(user) {
+    delete(this.data.users[user.getId()])
+  }
+
   getUserById(id) {
     return this.data.users[id]
   }
@@ -237,16 +241,22 @@ class ClientManager {
 
   handleSocketConnection(socket) {
     if (socket.handshake.query.name) {
-      let userId = User.getId(socket.handshake.query.name)
-      let user   = this.getUser(userId)
-      if (!user) {
-        user = new User(this.config)
-        user.initialize(socket, {
-          name: socket.handshake.query.name
-        })
-        this.addUser(user)
+      let userName     = socket.handshake.query.name
+      let nameInstance = 1
+      let userId       = User.getId(userName)
+      let user         = this.getUser(userId)
+      while (user !== null) {
+        userName = socket.handshake.query.name + ' ' + nameInstance
+        userId   = User.getId(userName)
+        user     = this.getUser(userId)
+        nameInstance++
       }
-      this.data.sessions[socket.id] = userId
+      user = new User(this.config)
+      user.initialize(socket, {
+        name: userName
+      })
+      this.addUser(user)
+      this.data.sessions[socket.id] = User.getId(userName)
       this.bindSocketToModuleEvents(socket)
       this.logger.info('User ' + user.getName() + ' connected.', socket.id)
     } else if (socket.handshake.query.admin) {
@@ -270,6 +280,7 @@ class ClientManager {
           user.leave(instance)
         }
       }
+      this.removeUser(user)
       this.logger.info('User ' + user.getName() + ' disconnected from ' + userInstanceId + '.', socket.id)
     } else if (this.data.admin.socket && socketId == this.data.admin.socket.id) {
       this.logger.info('Admin disconnected.', socket.id)
