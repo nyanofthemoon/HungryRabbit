@@ -149,9 +149,7 @@ div.rabbit {
   z-index: 100;
   position: absolute;
   bottom: 0;
-  justify-content: flex-end;
-  display: flex;
-  padding-bottom: 54px;
+  padding-bottom: 52px;
 }
 
 img.rabbit {
@@ -167,6 +165,7 @@ img.rabbit {
   color: black;
   text-align: center;
   width: 73%;
+  margin-left:27%;
 }
 
 .rabbit-text-1 {
