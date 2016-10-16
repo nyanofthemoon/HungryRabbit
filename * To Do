@@ -1,7 +1,3 @@
-UX
-
-- Bug: Fast duble-tap zooms in ?
-
 Music
 
 - Change to music selected by Nico
@@ -15,8 +11,6 @@ Domain Name
 
 - Redirect to HerokuApp (nico will give domain)
 
+Bugs
 
-
-
--- Safari on Admin
-  -- name is not under the first rabbit ?
+- Safari Admin : Rabbit div disappears
