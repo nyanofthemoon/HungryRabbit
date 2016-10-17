@@ -82,7 +82,7 @@ class Instance extends Component {
           let that = this
           setTimeout(function() {
             that._playMusic('title-screen')
-          }, 750)
+          }, 2500)
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">Hungry Rabbit</h1>
