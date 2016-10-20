@@ -12,8 +12,9 @@ let audio = {
     }
   ],
   sound: [
-    {id: 'munch', track: new Howl({urls: ['/admin/assets/snd/munch.wav'], loop: false})},
-    {id: 'burp', track: new Howl({urls: ['/admin/assets/snd/burp.mp3'], loop: false})}
+    {id: 'munch', track: new Howl({urls: ['/admin/assets/snd/munch.wav'], volume: 1, loop: false})},
+    {id: 'burp', track: new Howl({urls: ['/admin/assets/snd/burp.mp3'], volume: 1, loop: false})},
+    {id: 'warning', track: new Howl({urls: ['/admin/assets/snd/warning.mp3'], volume: 1, loop: false})}
   ]
 }
 

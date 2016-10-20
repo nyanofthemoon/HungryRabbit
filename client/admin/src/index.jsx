@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 
 import Application from './containers/Application';
 import store       from './store'
+import audio       from './helpers/audio'
 
 setTimeout(function() {
   render(
@@ -17,4 +18,4 @@ setTimeout(function() {
     </Provider>,
     document.getElementById('root')
   );
-}, 250);
+}, 5000)

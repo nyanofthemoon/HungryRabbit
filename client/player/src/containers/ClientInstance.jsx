@@ -14,6 +14,10 @@ class ClientInstance extends Component {
   _handleEmptyTap() {
   }
 
+  _restart() {
+    document.location = '/'
+  }
+
   render() {
     const {instance, user} = this.props
     switch (instance.get('state')) {
@@ -45,6 +49,7 @@ class ClientInstance extends Component {
             return (
               <div className="instance">
                 <h1>It's Over</h1>
+                <button type="button" className="button" onClick={this._restart}>Play Again</button>
               </div>
             )
           }

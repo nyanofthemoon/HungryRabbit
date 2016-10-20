@@ -16,7 +16,8 @@ class Instance extends Component {
     this.state = {
       remaining: null,
       interval : null,
-      music    : null
+      music    : null,
+      sound    : null
     }
   }
 
@@ -51,15 +52,23 @@ class Instance extends Component {
   _clearInterval() {
     clearInterval(this.state.interval)
     this.setState({
-      interval: null
+      interval: null,
+      sound   : null
     })
   }
 
   _update() {
     let remaining = this.state.remaining - 1000
     if (remaining > 99) {
+      let sound = this.state.sound
+      if (this.state.sound === null && remaining <= 4000) {
+        playMusic(null)
+        playSound('warning')
+        sound = true
+      }
       this.setState({
-        remaining: remaining
+        remaining: remaining,
+        sound    : sound
       })
     } else {
       this._clearInterval()
@@ -79,10 +88,7 @@ class Instance extends Component {
       default:
       case 'waiting':
         if (!this.state.interval) {
-          let that = this
-          setTimeout(function() {
-            that._playMusic('title-screen')
-          }, 2500)
+          this._playMusic('title-screen')
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">Hungry Rabbit</h1>
@@ -105,7 +111,7 @@ class Instance extends Component {
       case 'started':
         let count = Object.keys(instance.getIn(['data', 'users']).toJSON()).length
         if (count < Config.instance.minPlayers) {
-          this._playMusic('title-screen')
+          this._playMusic('wait-screen')
           return (
             <div className="instance">
               <h1 className="title animated pulse">Not Enough Players</h1>
