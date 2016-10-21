@@ -2,7 +2,7 @@ let host    = window.location.hostname
 let name    = 'production'
 let port    = ''
 let verbose = false
-let wait    = 60
+let wait    = 30
 
 if (['localhost', '127.0.0.1'].indexOf(host) > -1) {
   name    = 'development'
