@@ -1,8 +1,14 @@
-Sound
+Features
 
-- Mouth Sound -> implement random sounds
-
+- On Player : Show Current Position
+- On Player : Bigger Tap Button
+- On Player : Change from "Tap!" to "Tap Fast"
+- Set 45 seconds
+- Waiting Screen : How Many Players
 
 Bugs
 
-- Safari Admin : Rabbit div disappears
+- Security : Flag People Tapping Too Fast (Hackers)
+- Dissable zoom-in on iPhone (possible accessibility issue)
+- Blue Highlight on image for Android
+- Disable Scrolling : overflow:hidden no scrollbars
