@@ -42,7 +42,8 @@ class List extends Component {
               let image = document.querySelector('#rabbit-' + item.id)
               if (image) {
                 if (Math.floor(Math.random() * 5) == 3) {
-                  that.props.playSound('munch')
+                  let randMunch = Math.floor(Math.random() * 20) + 1 // rnd 1-to-21
+                  that.props.playSound('munch' + randMunch)
                 }
                 image.src = '/admin/assets/img/rabbit-' + item.image + '-closed.png'
                 setTimeout(function() {
