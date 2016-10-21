@@ -4,7 +4,7 @@ let audio = {
   music: [
     {id: 'title-screen', track: new Howl({urls: ['/admin/assets/snd/title.mp3'], volume: 1, loop: true})},
     {id: 'wait-screen' , track: new Howl({urls: ['/admin/assets/snd/wait.mp3'], volume: 1, loop: true})},
-    {id: 'game-screen', track: new Howl({urls: ['/admin/assets/snd/play.mp3'], volume: 0.75, loop: true})},
+    {id: 'game-screen', track: new Howl({urls: ['/admin/assets/snd/play.mp3'], volume: 0.5, loop: true})},
     {id: 'over-screen', track: new Howl({urls: ['/admin/assets/snd/over.mp3'], volume: 1, loop: false})
       .on('end', function(){
         playSound('burp')
