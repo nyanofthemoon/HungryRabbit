@@ -3,8 +3,9 @@ Features
 - On Player : Show Current Position
 - On Player : Bigger Tap Button
 - On Player : Change from "Tap!" to "Tap Fast"
-- Set 45 seconds
-- Waiting Screen : How Many Players
+- On Admin Waiting Screen : Set 45 seconds
+- On Admin Waiting Screen : How Many Players
+- On Admin Location : Go To:<br />123bunny.com
 
 Bugs
 
@@ -12,3 +13,7 @@ Bugs
 - Dissable zoom-in on iPhone (possible accessibility issue)
 - Blue Highlight on image for Android
 - Disable Scrolling : overflow:hidden no scrollbars
+- "Play Again" did not appear (person might've joined after game started)
+
+To Do
+- Nico to provide end of game bunny trophy picture
