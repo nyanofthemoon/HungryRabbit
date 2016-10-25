@@ -91,7 +91,7 @@ class Instance extends Component {
           this._playMusic('title-screen')
           return (
             <div className="instance">
-              <h1 className="title animated rubberBand">Hungry Rabbit</h1>
+              <h1 className="title animated rubberBand">123 Bunny</h1>
               <img src="/admin/assets/img/logo-halloween.png" style={{width:'25vmin'}}/>
               <button type="button" className="button" onClick={this._startTimer.bind(this)}>Start</button>
             </div>
