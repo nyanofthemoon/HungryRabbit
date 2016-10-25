@@ -20,6 +20,7 @@ class ClientInstance {
       type     : null,
       status   : null,
       users    : {},
+      last     : {},
       state    : {},
       condition: 0,
       endState : {}
@@ -111,14 +112,23 @@ class ClientInstance {
   // Actions
 
   act(data, user) {
-    switch (this.data.type) {
-      case 'tap':
-        this._tap(user, parseInt(data.data))
-        break
-      default:
-        break
+    let now     = new Date().getTime()
+    let cheater = false
+    if (this.data.last[user.getId()] && (now - this.data.last[user.getId()]) < 100) { // over 10 taps per second
+      cheater = true
     }
-    return this.over(data)
+    if (false === cheater) {
+      switch (this.data.type) {
+        case 'tap':
+          this._tap(user)
+          break
+        default:
+          break
+      }
+      this.data.last[user.getId()] = now
+      return this.over(data)
+    }
+    return false
   }
 
   over(data) {
@@ -137,11 +147,11 @@ class ClientInstance {
     }
   }
 
-  _tap(user, value) {
+  _tap(user) {
     if (!this.data.state[user.getId()]) {
       this.data.state[user.getId()] = 0
     }
-    this.data.state[user.getId()] = this.data.state[user.getId()] + value
+    this.data.state[user.getId()] = this.data.state[user.getId()] + 1
   }
 
   _highestStateKey() {

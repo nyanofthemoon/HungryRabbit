@@ -92,19 +92,18 @@ class Instance extends Component {
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">123 Bunny</h1>
-              <img src="/admin/assets/img/logo-halloween.png" style={{width:'40vmin'}}/>
+              <img src="/admin/assets/img/logo-halloween.png" style={{width:'25vmin'}}/>
               <button type="button" className="button" onClick={this._startTimer.bind(this)}>Start</button>
             </div>
           )
         } else {
           this._playMusic('wait-screen')
-          let location = window.location
-          let joinUrl  = location.protocol + '//' + location.hostname
           return (
             <div className="instance">
-              <h1 className="title animated rubberBand">It's Time To Join!</h1>
-              <h2 className="title">{joinUrl}</h2>
-              <h1 className="title">Starts in {this._mmss()}</h1>
+              <h2 className="title animated rubberBand">It's Time To Join!</h2>
+              <h3 className="title">On Your Phone, Go To</h3>
+              <h1 className="title join">{window.location.hostname}</h1>
+              <h2 className="title">Starts in {this._mmss()}</h2>
             </div>
           )
         }
