@@ -11,7 +11,7 @@ class User extends Component {
           <h1>{this.props.user.get('name')}</h1>
           <br />
           <button className='tap' type="button" onTouchTap={this.props.handleTouchTap} onClick={this.props.handleClick}>
-            Tap!
+            Tap Fast
           </button>
           <br />
         </div>

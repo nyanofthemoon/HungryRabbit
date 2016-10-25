@@ -121,3 +121,6 @@ body {
   width: 125px;
   margin-left: -25px;
 }
+
+/* Remove Focus */
+*:focus { outline:none !important }

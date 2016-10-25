@@ -79,14 +79,14 @@ button {
 /* Disconnected Screen */
 
 h1.title {
-  font-size  : 5em;
+  font-size  : 10em;
   text-shadow: 3px 3px $median-color;
   margin-top: 0;
   margin-bottom: 0;
 }
 
 h2.title {
-  font-size  : 3.5em;
+  font-size  : 5em;
 }
 
 h1.join {
@@ -101,7 +101,12 @@ h1.join {
 }
 
 h3.title {
-  font-size  : 3em;
+  font-size: 3.5em;
+}
+
+h2.timer > * {
+  position: absolute;
+  bottom: 2vh;
 }
 
 /* Connected Screen */
