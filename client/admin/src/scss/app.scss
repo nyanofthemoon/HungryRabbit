@@ -156,6 +156,15 @@ img.rabbit {
   z-index: 100;
 }
 
+div.winner {
+  display: flex;
+  align-items: center;
+}
+
+h2.winner {
+  margin-left: 25px;
+}
+
 .rabbit-text {
   position: absolute;
   bottom: 0;

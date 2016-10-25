@@ -92,7 +92,7 @@ class Instance extends Component {
           return (
             <div className="instance">
               <h1 className="title animated rubberBand">Hungry Rabbit</h1>
-              <img src="/admin/assets/img/logo.png" style={{width:'25vmin'}}/>
+              <img src="/admin/assets/img/logo-halloween.png" style={{width:'25vmin'}}/>
               <button type="button" className="button" onClick={this._startTimer.bind(this)}>Start</button>
             </div>
           )
@@ -131,7 +131,10 @@ class Instance extends Component {
         return (
           <div className="instance">
             <h1 className="title animated tada">The Winner Is</h1>
-            <h2 className="title">{instance.getIn(['data','endState','winner','user','name'])}</h2>
+            <div className="winner">
+              <img src="/admin/assets/img/trophy.png" style={{width:'25vmin'}}/>
+              <h2 className="title winner">Me{instance.getIn(['data','endState','winner','user','name'])}</h2>
+            </div>
             <button type="button" className="button" onClick={this._restartTimer.bind(this)}>Restart</button>
           </div>
         )
