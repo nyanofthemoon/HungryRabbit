@@ -8,7 +8,7 @@ if (['localhost', '127.0.0.1'].indexOf(host) > -1) {
   name    = 'development'
   port    = ':8888'
   verbose = true
-  wait    = 5
+  wait    = 500
 }
 
 export default {

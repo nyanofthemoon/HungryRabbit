@@ -104,7 +104,11 @@ h3.title {
   font-size: 3.5em;
 }
 
-h2.timer > * {
+div.instruction {
+  text-align: center;
+}
+
+div.timer {
   position: absolute;
   bottom: 2vh;
 }

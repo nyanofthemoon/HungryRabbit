@@ -100,10 +100,14 @@ class Instance extends Component {
           this._playMusic('wait-screen')
           return (
             <div className="instance">
-              <h2 className="title animated rubberBand">It's Time To Join!</h2>
-              <h3 className="title">On Your Phone, Go To</h3>
-              <h1 className="title join">{window.location.hostname}</h1>
-              <h2 className="title timer">Starts in {this._mmss()}</h2>
+              <div className="instruction">
+                <h2 className="title animated rubberBand">It's Time To Join!</h2>
+                <h2 className="title">On Your Phone, Go To</h2>
+                <h1 className="title join">{window.location.hostname}</h1>
+              </div>
+              <div className="timer">
+                <h2 className="title">Starts in {this._mmss()}</h2>
+              </div>
             </div>
           )
         }
