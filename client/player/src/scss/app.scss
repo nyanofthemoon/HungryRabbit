@@ -7,6 +7,19 @@
   box-sizing: inherit;
 }
 
+/* Remove Focus and Highlight Color */
+* {
+  tap-highlight-color: transparent;
+}
+*:focus {
+  outline      : none;
+  outline-style: none;
+  color        : transparent;
+  box-shadow   : none;
+  border       : none;
+  border-color : transparent;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -125,6 +138,3 @@ body {
   width: 125px;
   margin-left: -25px;
 }
-
-/* Remove Focus */
-*:focus { outline:none !important }

@@ -2,6 +2,7 @@
 
 require('./scss/app.scss');
 
+// Prevent Dbl-Tap Zooms on Devices
 document.body.addEventListener('touchmove', function(event) {
   event.preventDefault();
   event.stopPropagation();
