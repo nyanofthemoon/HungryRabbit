@@ -7,19 +7,6 @@
   box-sizing: inherit;
 }
 
-/* Remove Focus and Highlight Color */
-* {
-  tap-highlight-color: transparent;
-}
-*:focus {
-  outline      : none;
-  outline-style: none;
-  color        : transparent;
-  box-shadow   : none;
-  border       : none;
-  border-color : transparent;
-}
-
 html {
   box-sizing: border-box;
 }
@@ -121,7 +108,13 @@ body {
   color: white;
   font-size: 10vw;
   border-radius:25vw;
+}
+
+/* Remove Focus and Highlight Color */
+.tap:focus, .tap:active, .tap.active, .tap:focus:active {
+  background-image: none;
   outline: none;
+  box-shadow: none;
 }
 
 .tap:active {
