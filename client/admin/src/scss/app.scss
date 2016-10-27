@@ -114,7 +114,7 @@ div.instruction {
 
 div.timer {
   position: absolute;
-  bottom: 2vh;
+  bottom: 1vh;
 }
 
 /* Connected Screen */
@@ -142,6 +142,11 @@ div.timer {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
+}
+
+.start {
+  justify-content: flex-start;
+  margin-top: 1vh;
 }
 
 .list {

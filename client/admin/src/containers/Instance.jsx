@@ -99,7 +99,7 @@ class Instance extends Component {
         } else {
           this._playMusic('wait-screen')
           return (
-            <div className="instance">
+            <div className="instance start">
               <div className="instruction">
                 <h2 className="title animated rubberBand">It's Time To Join!</h2>
                 <h2 className="title">On Your Phone, Go To</h2>
