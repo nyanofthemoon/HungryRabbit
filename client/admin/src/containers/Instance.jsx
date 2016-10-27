@@ -136,7 +136,7 @@ class Instance extends Component {
             <h1 className="title animated tada">The Winner Is</h1>
             <div className="winner">
               <img src="/admin/assets/img/trophy.png" style={{width:'25vmin'}}/>
-              <h2 className="title winner">Me{instance.getIn(['data','endState','winner','user','name'])}</h2>
+              <h2 className="title winner">{instance.getIn(['data','endState','winner','user','name'])}</h2>
             </div>
             <button type="button" className="button" onClick={this._restartTimer.bind(this)}>Restart</button>
           </div>
