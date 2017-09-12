@@ -111,7 +111,7 @@ socket.on('speak', callback)
 ```json
 {
   "name"  : "Nyan",
-  "message: "Hello!"
+  "message": "Hello!"
 }
 ```
 
