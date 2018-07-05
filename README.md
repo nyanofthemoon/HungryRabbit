@@ -1,6 +1,9 @@
 # HungryRabbit
 
-Prototype
+Prototype WebSocket Multiplayer Game
+
+Mobile Player : https://hungry-rabbit.herokuapp.com
+Game Dashboard : https://hungry-rabbit.herokuapp.com/dashboard
 
 # Installation
 
